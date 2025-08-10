@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpot Oyunu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #111;
+            color: white;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .slot-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .slot {
+            width: 150px;
+            height: 150px;
+            margin: 0 10px;
+            border: 4px solid gold;
+            border-radius: 10px;
+            background: black;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: gold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: orange;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎰 Jackpot Oyunu 🎰</h1>
+    <div class="slot-container">
+        <img class="slot" id="slot1" src="images/1.png">
+        <img class="slot" id="slot2" src="images/2.png">
+        <img class="slot" id="slot3" src="images/3.png">
+    </div>
+    <button onclick="spin()">Çevir</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        const images = ["images/1.png", "images/2.png", "images/3.png", "images/4.png"];
+
+        function spin() {
+            let s1 = images[Math.floor(Math.random() * images.length)];
+            let s2 = images[Math.floor(Math.random() * images.length)];
+            let s3 = images[Math.floor(Math.random() * images.length)];
+
+            document.getElementById("slot1").src = s1;
+            document.getElementById("slot2").src = s2;
+            document.getElementById("slot3").src = s3;
+
+            if (s1 === s2 && s2 === s3) {
+                document.getElementById("result").textContent = "🎉 Tebrikler! Kazandınız! 🎉";
+                document.getElementById("result").style.color = "lime";
+            } else {
+                document.getElementById("result").textContent = "Tekrar deneyin!";
+                document.getElementById("result").style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>
