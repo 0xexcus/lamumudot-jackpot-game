@@ -8,6 +8,7 @@
   body {
     font-family: Arial, sans-serif;
     text-align: center;
+    /* Arka plan resmi tam ekran ve düzgün */
     background-image: url('images/grass_bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -48,9 +49,14 @@
     margin-top: 10px;
     color: #3b2f0b;
     font-weight: bold;
+    transition: background 0.3s;
   }
-  button:hover {
+  button:hover:not(:disabled) {
     background: orange;
+  }
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
   }
   .result {
     margin-top: 20px;
@@ -82,18 +88,18 @@
     color: #3b2f0b;
   }
 
-  /* Footer */
+  /* Footer şeffaf */
   footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: rgba(59, 47, 11, 0.8);
+    background: transparent; /* Şeffaf yapıldı */
     color: #f0e6c8;
     text-align: center;
     padding: 10px 0;
     font-size: 16px;
     font-family: Arial, sans-serif;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    box-shadow: none;
     z-index: 1000;
   }
   footer a {
@@ -103,6 +109,17 @@
   }
   footer a:hover {
     text-decoration: underline;
+  }
+
+  /* Konfeti efektleri için canvas */
+  #confetti-canvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
   }
 </style>
 </head>
@@ -124,12 +141,15 @@
   </div>
 </div>
 
-<button onclick="spin()">Spin</button>
+<button id="spinButton" onclick="spin()">Spin</button>
 <div id="result" class="result"></div>
 
 <footer>
-  <p>Created by excus | <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer">Twitter</a></p>
+  <p>Created by YourName | <a href="https://twitter.com/YourTwitter" target="_blank" rel="noopener noreferrer">Twitter</a></p>
 </footer>
+
+<!-- Konfeti için canvas -->
+<canvas id="confetti-canvas"></canvas>
 
 <script>
   const images = [
@@ -143,8 +163,13 @@
   ];
 
   let totalScore = 0;
+  let canSpin = true;
 
   function spin() {
+    if (!canSpin) return;
+    canSpin = false;
+    document.getElementById("spinButton").disabled = true;
+
     const s1 = images[Math.floor(Math.random() * images.length)];
     const s2 = images[Math.floor(Math.random() * images.length)];
     const s3 = images[Math.floor(Math.random() * images.length)];
@@ -163,6 +188,7 @@
         resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
         resultEl.style.color = "darkgreen";
         roundScore = 1000;
+        launchConfetti();
       } else if (s1.type === "milk") {
         resultEl.textContent = "Big Win!";
         resultEl.style.color = "blue";
@@ -179,6 +205,74 @@
 
     totalScore += roundScore;
     scoreEl.textContent = `Score: ${totalScore}`;
+
+    // 3 saniye sonra tekrar spin yapılabilir
+    setTimeout(() => {
+      canSpin = true;
+      document.getElementById("spinButton").disabled = false;
+    }, 3000);
+  }
+
+  // Basit konfeti animasyonu (canvas) 
+  // Kaynak: https://www.kirilv.com/canvas-confetti/
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    const colors = ['#ffc107', '#28a745', '#dc3545', '#007bff', '#fd7e14'];
+
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createPiece() {
+      return {
+        x: randomRange(0, canvas.width),
+        y: randomRange(-20, 0),
+        rotation: randomRange(0, 360),
+        size: randomRange(5, 10),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: randomRange(2, 5),
+        rotationSpeed: randomRange(5, 10)
+      };
+    }
+
+    for (let i = 0; i < 100; i++) {
+      pieces.push(createPiece());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.fillStyle = p.color;
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.4);
+        ctx.restore();
+
+        p.y += p.speed;
+        p.rotation += p.rotationSpeed;
+
+        if (p.y > canvas.height) {
+          p.y = randomRange(-20, 0);
+          p.x = randomRange(0, canvas.width);
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    // 5 saniye sonra konfeti temizle
+    setTimeout(() => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces = [];
+    }, 5000);
   }
 </script>
 
