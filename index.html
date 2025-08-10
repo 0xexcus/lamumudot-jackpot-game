@@ -8,14 +8,14 @@
   body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: white; /* Arka plan beyaz */
+    background: white;
     color: #3b2f0b;
     margin: 0;
     padding: 0;
   }
   h1 {
     margin-top: 20px;
-    color: #2e7d32; /* Yeşil başlık */
+    color: #2e7d32;
   }
   .container {
     display: flex;
@@ -30,16 +30,16 @@
     gap: 15px;
   }
   .slot {
-    width: 200px; /* Küçültülmüş boyut */
-    height: 200px;
-    border: 3px solid #4caf50; /* Yeşil çerçeve */
+    width: 180px;
+    height: 180px;
+    border: 3px solid #4caf50;
     border-radius: 10px;
     background: white;
   }
   button {
     padding: 10px 20px;
     font-size: 18px;
-    background: #4caf50; /* Yeşil buton */
+    background: #4caf50;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -74,7 +74,7 @@
     z-index: 1000;
   }
   .cow-maskot {
-    width: 75px;
+    width: 70px;
     height: auto;
   }
   #score {
@@ -82,16 +82,33 @@
     font-size: 20px;
     color: #3b2f0b;
   }
-  /* Çim resmi footer */
+  /* Çim resmi */
   .grass-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 250px; /* önerilen yükseklik */
+    height: 250px;
     background: url('images/grass_footer.png') no-repeat center;
     background-size: cover;
     z-index: 999;
+  }
+  footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: 1000;
+  }
+  footer a {
+    color: #ffeb3b;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
   }
   #confetti-canvas {
     position: fixed;
@@ -126,11 +143,13 @@
 
 <!-- Çim görseli -->
 <div class="grass-footer"></div>
-  
+
 <footer>
-  <p>Created by excus | <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer">Twitter</a></p>
+  <p>Created by excus | 
+    <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer"> X (Twitter) </a>
+  </p>
 </footer>
-  
+
 <canvas id="confetti-canvas"></canvas>
 
 <script>
@@ -255,4 +274,3 @@
 
 </body>
 </html>
-
