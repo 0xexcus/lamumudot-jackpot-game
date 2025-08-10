@@ -81,6 +81,29 @@
     font-size: 20px;
     color: #3b2f0b;
   }
+
+  /* Footer */
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgba(59, 47, 11, 0.8);
+    color: #f0e6c8;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  footer a {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -103,6 +126,10 @@
 
 <button onclick="spin()">Spin</button>
 <div id="result" class="result"></div>
+
+<footer>
+  <p>Created by excus | <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer">Twitter</a></p>
+</footer>
 
 <script>
   const images = [
