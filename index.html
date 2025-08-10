@@ -8,17 +8,14 @@
   body {
     font-family: Arial, sans-serif;
     text-align: center;
-    /* Arka plan resmi tam ekran ve düzgün */
-    background-image: url('images/grass_bg.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+    background: white; /* Arka plan beyaz */
     color: #3b2f0b;
     margin: 0;
     padding: 0;
   }
   h1 {
     margin-top: 20px;
+    color: #2e7d32; /* Yeşil başlık */
   }
   .container {
     display: flex;
@@ -33,26 +30,26 @@
     gap: 15px;
   }
   .slot {
-    width: 150px;
-    height: 150px;
-    border: 4px solid gold;
+    width: 120px; /* Küçültülmüş boyut */
+    height: 120px;
+    border: 4px solid #4caf50; /* Yeşil çerçeve */
     border-radius: 10px;
     background: white;
   }
   button {
     padding: 10px 20px;
     font-size: 18px;
-    background: gold;
+    background: #4caf50; /* Yeşil buton */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-    color: #3b2f0b;
+    color: white;
     font-weight: bold;
     transition: background 0.3s;
   }
   button:hover:not(:disabled) {
-    background: orange;
+    background: #388e3c;
   }
   button:disabled {
     background: #ccc;
@@ -63,8 +60,6 @@
     font-size: 22px;
     font-weight: bold;
   }
-
-  /* Sağ üst köşe maskot ve puan */
   .top-right {
     position: fixed;
     top: 10px;
@@ -87,14 +82,12 @@
     font-size: 20px;
     color: #3b2f0b;
   }
-
-  /* Footer şeffaf */
   footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: transparent; /* Şeffaf yapıldı */
-    color: #f0e6c8;
+    background: white; /* Beyaz footer */
+    color: #333;
     text-align: center;
     padding: 10px 0;
     font-size: 16px;
@@ -103,15 +96,18 @@
     z-index: 1000;
   }
   footer a {
-    color: #ffd700;
+    color: #4caf50;
     text-decoration: none;
     font-weight: bold;
   }
   footer a:hover {
     text-decoration: underline;
   }
-
-  /* Konfeti efektleri için canvas */
+  .footer-logo {
+    width: 50px; /* Footer resmi boyutu */
+    height: auto;
+    margin-bottom: 5px;
+  }
   #confetti-canvas {
     position: fixed;
     pointer-events: none;
@@ -125,7 +121,6 @@
 </head>
 <body>
 
-<!-- Sağ üst köşe maskot + puan -->
 <div class="top-right">
   <img class="cow-maskot" src="images/cow_maskot.png" alt="Cow mascot" />
   <div id="score">Score: 0</div>
@@ -145,10 +140,10 @@
 <div id="result" class="result"></div>
 
 <footer>
+  <img src="images/footer_logo.png" alt="Footer Logo" class="footer-logo" />
   <p>Created by YourName | <a href="https://twitter.com/YourTwitter" target="_blank" rel="noopener noreferrer">Twitter</a></p>
 </footer>
 
-<!-- Konfeti için canvas -->
 <canvas id="confetti-canvas"></canvas>
 
 <script>
@@ -206,15 +201,11 @@
     totalScore += roundScore;
     scoreEl.textContent = `Score: ${totalScore}`;
 
-    // 3 saniye sonra tekrar spin yapılabilir
     setTimeout(() => {
       canSpin = true;
       document.getElementById("spinButton").disabled = false;
     }, 3000);
   }
-
-  // Basit konfeti animasyonu (canvas) 
-  // Kaynak: https://www.kirilv.com/canvas-confetti/
 
   function launchConfetti() {
     const canvas = document.getElementById('confetti-canvas');
@@ -268,7 +259,6 @@
 
     draw();
 
-    // 5 saniye sonra konfeti temizle
     setTimeout(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       pieces = [];
