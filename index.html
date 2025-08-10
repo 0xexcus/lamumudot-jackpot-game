@@ -104,7 +104,7 @@
     z-index: 1000;
   }
   footer a {
-    color: #ffeb3b;
+    color: white; /* Artık beyaz */
     text-decoration: none;
   }
   footer a:hover {
@@ -171,46 +171,63 @@
     canSpin = false;
     document.getElementById("spinButton").disabled = true;
 
-    const s1 = images[Math.floor(Math.random() * images.length)];
-    const s2 = images[Math.floor(Math.random() * images.length)];
-    const s3 = images[Math.floor(Math.random() * images.length)];
+    const slot1El = document.getElementById("slot1");
+    const slot2El = document.getElementById("slot2");
+    const slot3El = document.getElementById("slot3");
 
-    document.getElementById("slot1").src = s1.src;
-    document.getElementById("slot2").src = s2.src;
-    document.getElementById("slot3").src = s3.src;
+    // Hızlı şekilde görselleri değiştir
+    let spinInterval = setInterval(() => {
+      slot1El.src = images[Math.floor(Math.random() * images.length)].src;
+      slot2El.src = images[Math.floor(Math.random() * images.length)].src;
+      slot3El.src = images[Math.floor(Math.random() * images.length)].src;
+    }, 100);
 
-    const resultEl = document.getElementById("result");
-    const scoreEl = document.getElementById("score");
-
-    let roundScore = 0;
-
-    if (s1.src === s2.src && s2.src === s3.src) {
-      if (s1.type === "cow") {
-        resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
-        resultEl.style.color = "darkgreen";
-        roundScore = 1000;
-        launchConfetti();
-      } else if (s1.type === "milk") {
-        resultEl.textContent = "Big Win!";
-        resultEl.style.color = "blue";
-        roundScore = 500;
-      } else {
-        resultEl.textContent = "You Win!";
-        resultEl.style.color = "orange";
-        roundScore = 100;
-      }
-    } else {
-      resultEl.textContent = "Try Again!";
-      resultEl.style.color = "red";
-    }
-
-    totalScore += roundScore;
-    scoreEl.textContent = `Score: ${totalScore}`;
-
+    // 2 saniye sonra durdur ve sonucu belirle
     setTimeout(() => {
-      canSpin = true;
-      document.getElementById("spinButton").disabled = false;
-    }, 3000);
+      clearInterval(spinInterval);
+
+      const s1 = images[Math.floor(Math.random() * images.length)];
+      const s2 = images[Math.floor(Math.random() * images.length)];
+      const s3 = images[Math.floor(Math.random() * images.length)];
+
+      slot1El.src = s1.src;
+      slot2El.src = s2.src;
+      slot3El.src = s3.src;
+
+      const resultEl = document.getElementById("result");
+      const scoreEl = document.getElementById("score");
+
+      let roundScore = 0;
+
+      if (s1.src === s2.src && s2.src === s3.src) {
+        if (s1.type === "cow") {
+          resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
+          resultEl.style.color = "darkgreen";
+          roundScore = 1000;
+          launchConfetti();
+        } else if (s1.type === "milk") {
+          resultEl.textContent = "Big Win!";
+          resultEl.style.color = "blue";
+          roundScore = 500;
+        } else {
+          resultEl.textContent = "You Win!";
+          resultEl.style.color = "orange";
+          roundScore = 100;
+        }
+      } else {
+        resultEl.textContent = "Try Again!";
+        resultEl.style.color = "red";
+      }
+
+      totalScore += roundScore;
+      scoreEl.textContent = `Score: ${totalScore}`;
+
+      setTimeout(() => {
+        canSpin = true;
+        document.getElementById("spinButton").disabled = false;
+      }, 3000);
+
+    }, 2000);
   }
 
   function launchConfetti() {
