@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lamumudot Jackpot</title>
-<link rel="icon" type="image/png" href="images/favicon.png" />
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -15,7 +14,7 @@
     padding: 0;
   }
   h1 {
-    margin-top: 33px;
+    margin-top: 20px;
     color: #2e7d32;
   }
   .container {
@@ -31,8 +30,8 @@
     gap: 15px;
   }
   .slot {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border: 3px solid #4caf50;
     border-radius: 10px;
     background: white;
@@ -56,8 +55,8 @@
     background: #ccc;
     cursor: not-allowed;
   }
-  .result {
-    margin-top: 20px;
+  #result {
+    margin-top: 10px; /* Butonun hemen altına */
     font-size: 22px;
     font-weight: bold;
   }
@@ -75,7 +74,7 @@
     z-index: 1000;
   }
   .cow-maskot {
-    width: 70px;
+    width: 75px;
     height: auto;
   }
   #score {
@@ -83,13 +82,13 @@
     font-size: 20px;
     color: #3b2f0b;
   }
-  /* Çim resmi */
+  /* Çim resmi footer */
   .grass-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 150px;
+    height: 250px;
     background: url('images/grass_footer.png') no-repeat center;
     background-size: cover;
     z-index: 999;
@@ -105,7 +104,7 @@
     z-index: 1000;
   }
   footer a {
-    color: white; /* Artık beyaz */
+    color: #ffeb3b;
     text-decoration: none;
   }
   footer a:hover {
@@ -120,38 +119,16 @@
     height: 100%;
     z-index: 2000;
   }
-  .top-left {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: rgba(255,255,255,0.8);
-    padding: 8px 12px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    z-index: 1000;
-  }
-  .site-logo {
-    height: 60px;
-   }
-  #result {
-    margin-top: 20px; /* Butondan aşağıya boşluk */
-    font-weight: bold;
-    font-size: 20px;
-  }
 </style>
 </head>
 <body>
-
-<div class="top-left">
-  <img class="site-logo" src="images/logo.png" alt="Site Logo" />
-</div>
 
 <div class="top-right">
   <img class="cow-maskot" src="images/cow_maskot.png" alt="Cow mascot" />
   <div id="score">Score: 0</div>
 </div>
 
-<h1>Lamumudot Jackpot 🐄 gMoo</h1>
+<h1>Lamumudot Jackpot 🐄</h1>
 
 <div class="container">
   <div class="slot-container">
@@ -162,29 +139,15 @@
 </div>
 
 <button id="spinButton" onclick="spin()">Spin</button>
-<div id="game-info" style="margin-top: 15px; font-size: 16px; max-width: 600px; margin-left: auto; margin-right: auto; color: #fff; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px;">
-  <p><strong>Lamumudot Jackpot</strong> is a fun cow-themed slot game. Spin the reels to match symbols and score points. Reach over <strong>1000 points</strong> to celebrate with confetti!</p>
-  <p><strong>Scoring:</strong></p>
-  <ul style="list-style:none; padding:0;">
-    <li>🍀 Clover – 100 points</li>
-    <li>🌿 Fresh Grass – 100 points</li>
-    <li>🌽 Corn – 100 points</li>
-    <li>🌾 Hay Bale – 100 points</li>
-    <li>🍎 Apple – 100 points</li>
-    <li>🥛 Milk Bottle – 500 points</li>
-    <li>🐄 Cow – 1000 points (Jackpot)</li>
-  </ul>
-</div>
-<div id="result" class="result"></div>
+<div id="result"></div>
 
 <!-- Çim görseli -->
 <div class="grass-footer"></div>
-
+  
 <footer>
-  <p><a href="https://twitter.com/commondotxyz" target="_blank" rel="noopener noreferrer"> commondotxyz </a>  ❤  <a href="https://twitter.com/Lamumudotxyz" target="_blank" rel="noopener noreferrer"> Lamumudotxyz </a> <p>
-  <p> <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer"> Created by excus </a> </p>
+  <p>Created by excus | <a href="https://twitter.com/excus_eth" target="_blank" rel="noopener noreferrer">Twitter</a></p>
 </footer>
-
+  
 <canvas id="confetti-canvas"></canvas>
 
 <script>
@@ -206,63 +169,71 @@
     canSpin = false;
     document.getElementById("spinButton").disabled = true;
 
-    const slot1El = document.getElementById("slot1");
-    const slot2El = document.getElementById("slot2");
-    const slot3El = document.getElementById("slot3");
+    const slotElements = [
+      document.getElementById("slot1"),
+      document.getElementById("slot2"),
+      document.getElementById("slot3")
+    ];
 
-    // Hızlı şekilde görselleri değiştir
-    let spinInterval = setInterval(() => {
-      slot1El.src = images[Math.floor(Math.random() * images.length)].src;
-      slot2El.src = images[Math.floor(Math.random() * images.length)].src;
-      slot3El.src = images[Math.floor(Math.random() * images.length)].src;
-    }, 100);
+    const finalImages = [];
+    const intervals = [];
 
-    // 2 saniye sonra durdur ve sonucu belirle
-    setTimeout(() => {
-      clearInterval(spinInterval);
+    // Her slotu döndür
+    slotElements.forEach((slot, index) => {
+      intervals[index] = setInterval(() => {
+        const randomImg = images[Math.floor(Math.random() * images.length)];
+        slot.src = randomImg.src;
+      }, 100);
+    });
 
-      const s1 = images[Math.floor(Math.random() * images.length)];
-      const s2 = images[Math.floor(Math.random() * images.length)];
-      const s3 = images[Math.floor(Math.random() * images.length)];
-
-      slot1El.src = s1.src;
-      slot2El.src = s2.src;
-      slot3El.src = s3.src;
-
-      const resultEl = document.getElementById("result");
-      const scoreEl = document.getElementById("score");
-
-      let roundScore = 0;
-
-      if (s1.src === s2.src && s2.src === s3.src) {
-        if (s1.type === "cow") {
-          resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
-          resultEl.style.color = "darkgreen";
-          roundScore = 1000;
-          launchConfetti();
-        } else if (s1.type === "milk") {
-          resultEl.textContent = "Big Win!";
-          resultEl.style.color = "blue";
-          roundScore = 500;
-        } else {
-          resultEl.textContent = "You Win!";
-          resultEl.style.color = "orange";
-          roundScore = 100;
-        }
-      } else {
-        resultEl.textContent = "Try Again!";
-        resultEl.style.color = "red";
-      }
-
-      totalScore += roundScore;
-      scoreEl.textContent = `Score: ${totalScore}`;
-
+    // Sırayla durdurma
+    slotElements.forEach((slot, index) => {
       setTimeout(() => {
-        canSpin = true;
-        document.getElementById("spinButton").disabled = false;
-      }, 3000);
+        clearInterval(intervals[index]);
+        const chosen = images[Math.floor(Math.random() * images.length)];
+        slot.src = chosen.src;
+        finalImages[index] = chosen;
 
-    }, 2000);
+        // Son slot durunca sonucu kontrol et
+        if (index === slotElements.length - 1) {
+          checkResult(finalImages);
+        }
+      }, 1000 + index * 700); // sıralı durma süresi
+    });
+  }
+
+  function checkResult(slots) {
+    const resultEl = document.getElementById("result");
+    const scoreEl = document.getElementById("score");
+    let roundScore = 0;
+
+    if (slots[0].src === slots[1].src && slots[1].src === slots[2].src) {
+      if (slots[0].type === "cow") {
+        resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
+        resultEl.style.color = "darkgreen";
+        roundScore = 1000;
+        launchConfetti();
+      } else if (slots[0].type === "milk") {
+        resultEl.textContent = "Big Win!";
+        resultEl.style.color = "blue";
+        roundScore = 500;
+      } else {
+        resultEl.textContent = "You Win!";
+        resultEl.style.color = "orange";
+        roundScore = 100;
+      }
+    } else {
+      resultEl.textContent = "Try Again!";
+      resultEl.style.color = "red";
+    }
+
+    totalScore += roundScore;
+    scoreEl.textContent = `Score: ${totalScore}`;
+
+    setTimeout(() => {
+      canSpin = true;
+      document.getElementById("spinButton").disabled = false;
+    }, 500);
   }
 
   function launchConfetti() {
@@ -326,5 +297,3 @@
 
 </body>
 </html>
-
-
