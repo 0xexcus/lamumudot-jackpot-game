@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lamumudot Jackpot</title>
+<title>Lamumu Slot Machine</title>
 <link rel="icon" type="image/png" href="images/favicon.png" />
 <style>
   body {
@@ -57,7 +57,7 @@
     cursor: not-allowed;
   }
   #result {
-    margin-top: 15px; /* Butondan aşağı boşluk */
+    margin-top: 15px; 
     font-weight: bold;
     font-size: 20px;
   }
@@ -83,7 +83,6 @@
     font-size: 20px;
     color: #3b2f0b;
   }
-  /* Çim resmi */
   .grass-footer {
     position: fixed;
     bottom: 0;
@@ -157,7 +156,7 @@
   <div id="score">Score: 0</div>
 </div>
 
-<h1>Lamumudot Jackpot 🐄 gMoo</h1>
+<h1>Lamumu Slot Machine 🐄 gMoo</h1>
 
 <div class="container">
   <div class="slot-container">
@@ -168,10 +167,10 @@
 </div>
 
 <button id="spinButton" onclick="spin()">Spin</button>
-<div id="result"></div> <!-- SONUÇ BUTONUN HEMEN ALTINDA -->
+<div id="result"></div> 
 
 <div id="game-info">
-  <p><strong>Lamumudot Jackpot</strong> is a fun cow-themed slot game. Spin the reels to match symbols and score points. Reach over <strong>1000 points</strong> to celebrate with confetti!</p>
+  <p><strong>Lamumu Slot Machine</strong> is a fun cow-themed slot game. Spin the reels to match symbols and score points. Reach over <strong>1000 points</strong> to celebrate with confetti!</p>
   <p><strong>Scoring:</strong></p>
   <ul style="list-style:none; padding:0;">
     <li>🍀 Clover – 100 points</li>
@@ -184,7 +183,6 @@
   </ul>
 </div>
 
-<!-- Çim görseli -->
 <div class="grass-footer"></div>
 
 <footer>
@@ -217,14 +215,12 @@
     const slot2El = document.getElementById("slot2");
     const slot3El = document.getElementById("slot3");
 
-    // Hızlı şekilde görselleri değiştir
     let spinInterval = setInterval(() => {
       slot1El.src = images[Math.floor(Math.random() * images.length)].src;
       slot2El.src = images[Math.floor(Math.random() * images.length)].src;
       slot3El.src = images[Math.floor(Math.random() * images.length)].src;
     }, 100);
 
-    // 2 saniye sonra durdur ve sonucu belirle
     setTimeout(() => {
       clearInterval(spinInterval);
 
@@ -243,7 +239,7 @@
 
       if (s1.src === s2.src && s2.src === s3.src) {
         if (s1.type === "cow") {
-          resultEl.textContent = "LAMUMUDOT JACKPOT!!! 🎉";
+          resultEl.textContent = "LAMUMU JACKPOT!!! 🎉";
           resultEl.style.color = "darkgreen";
           roundScore = 1000;
           launchConfetti();
@@ -332,4 +328,5 @@
 </script>
 
 </body>
+
 </html>
